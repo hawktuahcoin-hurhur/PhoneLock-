@@ -25,7 +25,7 @@ The site must be served over HTTPS for Home Screen install and notifications to 
 
 - **Netlify:** sign in with GitHub, choose *Add new site → Import an existing project*, and pick this repo. `netlify.toml` already points it at `web/`, so there's nothing to configure.
 - **Cloudflare Pages:** connect the repo, leave the build command empty, and set the output directory to `web`.
-- **GitHub Pages:** this needs a public repo, or a paid plan for private repos. In *Settings → Pages*, set Source to *GitHub Actions*. Then under *Settings → Secrets and variables → Actions → Variables*, add `DEPLOY_PAGES` = `on`. `.github/workflows/deploy-web.yml` publishes `web/` on every push.
+- **GitHub Pages:** go to *Settings → Pages → Build and deployment* and set Source to **GitHub Actions**. Then run *Actions → Deploy web app → Run workflow* once. The site will be at `https://<owner>.github.io/<repo>/`, and every push that changes `web/` redeploys it. Pages is free for public repos; a private repo needs GitHub Pro.
 
 To try it on your computer first, run `python3 -m http.server -d web 8000` and open http://localhost:8000.
 

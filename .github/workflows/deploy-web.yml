@@ -1,5 +1,6 @@
-# Publishes web/ to GitHub Pages. Pages needs a public repo (or a paid GitHub plan for private repos).
-# Turn it on: Settings → Pages → Source: GitHub Actions, then add a repository variable DEPLOY_PAGES = on.
+# Publishes web/ to GitHub Pages at https://<owner>.github.io/<repo>/
+# One-time setup: Settings → Pages → Build and deployment → Source: "GitHub Actions".
+# Until that's done, the deploy job is skipped (no failed runs).
 name: Deploy web app
 
 on:
@@ -17,8 +18,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.pages.outputs.enabled }}
+    steps:
+      - id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null | grep -q workflow; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::GitHub Pages isn't set to deploy from GitHub Actions yet. Settings → Pages → Source: GitHub Actions, then re-run this workflow."
+          fi
+
   deploy:
-    if: vars.DEPLOY_PAGES == 'on'
+    needs: check
+    if: needs.check.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
