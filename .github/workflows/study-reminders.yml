@@ -1,0 +1,28 @@
+# Sends background study reminders to the PhoneLock web app (works even when the app is closed).
+# Setup: README → "Background reminders". Turn it on by adding a repository variable PUSH_REMINDERS = on.
+name: Study reminders
+
+on:
+  schedule:
+    # Times are UTC. Edit to your reminder times, e.g. 4pm and 8pm US Eastern (EDT, UTC−4) = 20:00 and 00:00 UTC.
+    - cron: "0 20 * * *"
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  remind:
+    if: vars.PUSH_REMINDERS == 'on' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save --no-package-lock web-push@3.6.7
+      - run: node push/send-reminders.mjs
+        env:
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          PUSH_SUBSCRIPTIONS: ${{ secrets.PUSH_SUBSCRIPTIONS }}
+          VAPID_SUBJECT: ${{ secrets.VAPID_SUBJECT }}

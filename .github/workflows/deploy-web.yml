@@ -1,0 +1,33 @@
+# Publishes web/ to GitHub Pages. Pages needs a public repo (or a paid GitHub plan for private repos).
+# Turn it on: Settings → Pages → Source: GitHub Actions, then add a repository variable DEPLOY_PAGES = on.
+name: Deploy web app
+
+on:
+  push:
+    paths: ["web/**", ".github/workflows/deploy-web.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: vars.DEPLOY_PAGES == 'on'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deployment
+        uses: actions/deploy-pages@v4

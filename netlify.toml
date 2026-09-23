@@ -1,0 +1,9 @@
+# Netlify: connect this repo and it deploys web/ as-is (no build step).
+[build]
+  publish = "web"
+  command = ""
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
