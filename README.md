@@ -2,7 +2,7 @@
 
 Gamified daily studying: SAT prep plus 350+ topics, with XP, streaks, and trophies. PhoneLock comes in two versions:
 
-| | **Web app** (`web/`) | **iPhone app** (`PhoneLock/`) |
+| | **Web app** (`docs/`) | **iPhone app** (`PhoneLock/`) |
 |---|---|---|
 | Cost | Free | Needs a Mac and a $99/yr Apple Developer account |
 | Install | Open the site, then Add to Home Screen | Build with Xcode |
@@ -12,7 +12,7 @@ Gamified daily studying: SAT prep plus 350+ topics, with XP, streaks, and trophi
 
 ## Web app (free)
 
-A Home Screen web app (PWA). It runs offline, keeps your progress on your device, and needs no build step. It's plain HTML, CSS, and JavaScript in `web/`.
+A Home Screen web app (PWA). It runs offline, keeps your progress on your device, and needs no build step. It's plain HTML, CSS, and JavaScript in `docs/`.
 
 - **Daily intake:** a set number of correct answers per day, including a minimum number of SAT answers. Strict mode takes one correct answer off today's progress for each wrong one.
 - **Reminders:** notifications at times you choose, sent when the goal isn't done yet. The Home Screen icon badge shows how many answers you still need.
@@ -23,11 +23,11 @@ A Home Screen web app (PWA). It runs offline, keeps your progress on your device
 
 The site must be served over HTTPS for Home Screen install and notifications to work. Pick one option:
 
-- **Netlify:** sign in with GitHub, choose *Add new site → Import an existing project*, and pick this repo. `netlify.toml` already points it at `web/`, so there's nothing to configure.
-- **Cloudflare Pages:** connect the repo, leave the build command empty, and set the output directory to `web`.
-- **GitHub Pages:** go to *Settings → Pages → Build and deployment* and set Source to **GitHub Actions**. Then run *Actions → Deploy web app → Run workflow* once. The site will be at `https://<owner>.github.io/<repo>/`, and every push that changes `web/` redeploys it. Pages is free for public repos; a private repo needs GitHub Pro.
+- **Netlify:** sign in with GitHub, choose *Add new site → Import an existing project*, and pick this repo. `netlify.toml` already points it at `docs/`, so there's nothing to configure.
+- **Cloudflare Pages:** connect the repo, leave the build command empty, and set the output directory to `docs`.
+- **GitHub Pages (free for public repos):** go to *Settings → Pages → Build and deployment*. Set Source to **Deploy from a branch**, then pick this branch and the **/docs** folder. The site will be at `https://<owner>.github.io/<repo>/`. Choosing the root folder also works, since the root `index.html` redirects to `docs/`. Or set Source to **GitHub Actions**, and `.github/workflows/deploy-web.yml` deploys `docs/` on every push.
 
-To try it on your computer first, run `python3 -m http.server -d web 8000` and open http://localhost:8000.
+To try it on your computer first, run `python3 -m http.server -d docs 8000` and open http://localhost:8000.
 
 ### 2. Add it to your Home Screen
 
@@ -105,9 +105,9 @@ PhoneLock/
   Content/                      SAT generators, R&W bank, flashcard decks, AI topic catalog, Catalog
   Services/                     GameStore (XP/streak/goal), LockManager (Screen Time), QuestionEngine, AIService, Keychain
   Theme/ Views/                 Dark glass UI: Today, Study, Quiz, Trophies, Settings, Onboarding
-web/                            Free Home Screen web app (index.html, app.js, generators.js, data.js, sw.js)
+docs/                           Free Home Screen web app (index.html, app.js, generators.js, data.js, sw.js)
 push/send-reminders.mjs         Sends background reminder pushes (run by .github/workflows/study-reminders.yml)
-tools/export-web-content.py     Regenerates web/data.js from the Swift content
+tools/export-web-content.py     Regenerates docs/data.js from the Swift content
 ```
 
 ### Limits

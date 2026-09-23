@@ -1,11 +1,11 @@
-# Publishes web/ to GitHub Pages at https://<owner>.github.io/<repo>/
+# Publishes docs/ (the web app) to GitHub Pages at https://<owner>.github.io/<repo>/
 # One-time setup: Settings → Pages → Build and deployment → Source: "GitHub Actions".
 # Until that's done, the deploy job is skipped (no failed runs).
 name: Deploy web app
 
 on:
   push:
-    paths: ["web/**", ".github/workflows/deploy-web.yml"]
+    paths: ["docs/**", ".github/workflows/deploy-web.yml"]
   workflow_dispatch:
 
 permissions:
@@ -46,6 +46,6 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: docs
       - id: deployment
         uses: actions/deploy-pages@v4

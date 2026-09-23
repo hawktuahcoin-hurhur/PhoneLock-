@@ -1,6 +1,6 @@
-# Netlify: connect this repo and it deploys web/ as-is (no build step).
+# Netlify: connect this repo and it deploys docs/ (the web app) as-is (no build step).
 [build]
-  publish = "web"
+  publish = "docs"
   command = ""
 
 [[headers]]
