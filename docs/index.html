@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>PhoneLock</title>
-  <meta name="description" content="Daily study goals with SAT prep, hundreds of topics, streaks and reminders.">
-  <meta name="theme-color" content="#0b0b1a">
+  <meta name="description" content="A hunter-style study RPG: daily quests, gates, ranks and SAT prep.">
+  <meta name="theme-color" content="#04060d">
   <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -14,16 +14,20 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Chakra+Petch:wght@500;600;700&family=Share+Tech+Mono&display=swap">
+  <link rel="stylesheet" href="system.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="app"></div>
   <div id="quiz" hidden></div>
-  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="toast" class="sys-window sys-notice" role="status" aria-live="polite"></div>
   <canvas id="confetti" aria-hidden="true"></canvas>
   <script src="data.js"></script>
   <script src="generators.js"></script>
+  <script src="battle.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

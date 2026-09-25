@@ -1,19 +1,19 @@
 {
   "name": "PhoneLock",
   "short_name": "PhoneLock",
-  "description": "Daily study goals with SAT prep, hundreds of topics, streaks and reminders.",
+  "description": "A hunter-style study RPG: daily quests, gates, ranks and SAT prep.",
   "start_url": "./?source=pwa",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0b0b1a",
-  "theme_color": "#0b0b1a",
+  "background_color": "#04060d",
+  "theme_color": "#04060d",
   "icons": [
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
     { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Continue studying", "url": "./?start=daily", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+    { "name": "Daily training", "url": "./?start=daily", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
   ]
 }

@@ -14,10 +14,18 @@ Gamified daily studying: SAT prep plus 350+ topics, with XP, streaks, and trophi
 
 A Home Screen web app (PWA). It runs offline, keeps your progress on your device, and needs no build step. It's plain HTML, CSS, and JavaScript in `docs/`.
 
-- **Daily intake:** a set number of correct answers per day, including a minimum number of SAT answers. Strict mode takes one correct answer off today's progress for each wrong one.
-- **Reminders:** notifications at times you choose, sent when the goal isn't done yet. The Home Screen icon badge shows how many answers you still need.
-- **Gamification:** XP and levels, combos, coins, streaks with streak freezes, 19 trophies, a study heatmap, and confetti.
-- **Same content as the iPhone app:** it's exported from the Swift sources by `python3 tools/export-web-content.py`. AI topics use your own Anthropic API key, which is stored only in your browser.
+It's styled as a hunter RPG: the app is *the System*, and you level up by studying.
+
+- **Daily Quest:** solve a set number of problems (with a minimum number of SAT drills) and clear one gate before midnight. Finishing it earns a reward chest with stat points, gold and a potion. Missing it issues a **Penalty Quest** the next day: a harder red gate you have to survive.
+- **Gates (2D raids):** four new gates open on a map every day, ranked E to S and themed on a topic. A gate is a side-view battle: each correct answer is a slash at the monster, each wrong answer lets it hit you. Clear the minions, then the boss. Use potions to heal, and Detect to eliminate wrong answers.
+- **Leveling:** EXP from every answer. Each level gives 3 stat points to spend on STR (damage), AGI (crits and dodges), VIT (HP), INT (bonus EXP) and SEN (Detect uses and gold). Your hunter rank climbs E → D → C → B → A → S.
+- **Job change at level 10:** clear the Job Change Trial, then pick Arcanist, Blademaster, Phantom, Guardian or Oracle.
+- **Shadow army:** after beating a boss you can try to extract it with **Arise**. Shadows give bonus EXP, and up to three fight beside you in gates.
+- **Titles, shop and records:** 21 titles to unlock and equip, a gold shop (potions, streak shields), a quest history heatmap, and streaks.
+- **Reminders:** System notifications at times you choose, plus a Home Screen badge showing what's left.
+- **Same study content as the iPhone app:** it's exported from the Swift sources by `python3 tools/export-web-content.py`. AI topics use your own Anthropic API key, which is stored only in your browser.
+
+The look comes from the **Hunter System** design system. Its tokens and components live in `docs/system.css`, and the game uses them directly. The 2D battle scene is `docs/battle.js`.
 
 ### 1. Put it online (free)
 
@@ -105,7 +113,7 @@ PhoneLock/
   Content/                      SAT generators, R&W bank, flashcard decks, AI topic catalog, Catalog
   Services/                     GameStore (XP/streak/goal), LockManager (Screen Time), QuestionEngine, AIService, Keychain
   Theme/ Views/                 Dark glass UI: Today, Study, Quiz, Trophies, Settings, Onboarding
-docs/                           Free Home Screen web app (index.html, app.js, generators.js, data.js, sw.js)
+docs/                           Free Home Screen web app: app.js (game), battle.js (2D raids), system.css (design system), generators.js, data.js, sw.js
 push/send-reminders.mjs         Sends background reminder pushes (run by .github/workflows/study-reminders.yml)
 tools/export-web-content.py     Regenerates docs/data.js from the Swift content
 ```

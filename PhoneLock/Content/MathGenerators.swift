@@ -68,7 +68,7 @@ enum MathGenerators {
             let x = Gen.r(-10...10), a = Gen.r(3...9), c = Gen.r(1...(a - 1)), b = Gen.r(-15...15)
             let d = (a - c) * x + b
             return Gen.q(t, "Solve for x: \(a)x \(Gen.signed(b)) = \(Gen.co(c))x \(Gen.signed(d))", x,
-                         "Move x terms together: \(a - c)x = \(d - b), so x = \(x).")
+                         "Move x terms together: \(Gen.co(a - c))x = \(d - b), so x = \(x).")
         }),
         ("sat.slope", "Slope Between Two Points", { t in
             let m = Gen.nonZero(-6...6), x1 = Gen.r(-8...8), dx = Gen.nonZero(-5...5), y1 = Gen.r(-10...10)

@@ -25,7 +25,7 @@
     }],
     ["sat.linear2", "Equations with Variables on Both Sides", () => {
       const x = r(-10, 10), a = r(3, 9), c = r(1, a - 1), b = r(-15, 15), d = (a - c) * x + b;
-      return num(`Solve for x: ${a}x ${signed(b)} = ${co(c)}x ${signed(d)}`, x, 5, `Move x terms together: ${a - c}x = ${d - b}, so x = ${x}.`);
+      return num(`Solve for x: ${a}x ${signed(b)} = ${co(c)}x ${signed(d)}`, x, 5, `Move x terms together: ${co(a - c)}x = ${d - b}, so x = ${x}.`);
     }],
     ["sat.slope", "Slope Between Two Points", () => {
       const m = nonZero(-6, 6), x1 = r(-8, 8), dx = nonZero(-5, 5), y1 = r(-10, 10), x2 = x1 + dx, y2 = y1 + m * dx;

@@ -1,9 +1,11 @@
 // PhoneLock service worker: offline app shell + push reminders.
-const VERSION = "phonelock-v2";
+const VERSION = "phonelock-v3";
 const SHELL = [
   "./",
   "index.html",
+  "system.css",
   "styles.css",
+  "battle.js",
   "app.js",
   "data.js",
   "generators.js",
@@ -66,21 +68,23 @@ self.addEventListener("push", (event) => {
     let payload = {};
     try { payload = event.data ? event.data.json() : {}; } catch (e) { payload = { body: event.data && event.data.text() }; }
     const s = await readState();
-    let title = "PhoneLock";
-    let body = payload.body || "Time to study.";
+    let title = "[ SYSTEM ]";
+    let body = payload.body || "Your Daily Quest is waiting.";
     if (s) {
       const fresh = s.date === todayKey();
       const done = fresh && s.goalMet;
       const left = fresh ? s.remainingCorrect : s.dailyGoal;
       const sat = fresh ? s.remainingSAT : s.satMinimum;
       if (done) {
-        title = "Goal complete";
-        body = s.streak > 1 ? `Your ${s.streak}-day streak is safe. A bonus round still earns XP.` : "Nice work today. A bonus round still earns XP.";
+        title = "[ DAILY QUEST COMPLETE ]";
+        body = s.streak > 1 ? `Your ${s.streak}-day streak is safe. Gates still grant EXP.` : "Quest complete. Gates still grant EXP.";
       } else {
         const parts = [];
-        if (left) parts.push(`${left} correct answers`);
-        if (sat) parts.push(`${sat} SAT answers`);
-        body = `${s.streak > 1 ? `Keep your ${s.streak}-day streak. ` : ""}Still to go: ${parts.join(" and ") || "a few answers"}.`;
+        if (left) parts.push(`${left} problems`);
+        if (sat) parts.push(`${sat} SAT drills`);
+        if (!fresh || s.gateNeeded) parts.push("1 gate");
+        if (fresh && s.penalty) { title = "[ PENALTY QUEST ]"; parts.push("the Penalty Zone"); }
+        body = `${s.streak > 1 ? `Keep your ${s.streak}-day streak. ` : ""}Remaining: ${parts.join(", ") || "a few problems"}.`;
       }
       if (self.navigator.setAppBadge && !done) self.navigator.setAppBadge(Math.min(99, (left || 0) + (sat || 0))).catch(() => {});
     }
